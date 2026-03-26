@@ -635,7 +635,7 @@
                         <span class="qso-callsign" id="callsign">--</span>
                         <span class="qso-mode" id="mode">FM</span>
                     </div>
-                    <span class="qso-with">与 -- 通联</span>
+                    <span class="qso-with" id="qsoWith">与 -- 通联</span>
                 </div>
 
                 <div class="qso-info">
@@ -777,6 +777,7 @@
             const callsign = getQueryParam('callsign');
             if (callsign) {
                 document.getElementById('qrzLink').href = 'https://www.qrz.com/db/' + callsign;
+                document.getElementById('qsoWith').textContent = '与 ' + callsign + ' 通联';
             }
 
             function generateShareText() {
