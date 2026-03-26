@@ -716,7 +716,7 @@
                     <p>COMMON FREQUENCIES</p>
                 </div>
 
-                <div class="cards-grid">
+                <div class="cards-grid" id="repeatersList">
                     <div class="card">
                         <div class="card-icon">
                             <i class="fas fa-tower-broadcast"></i>
@@ -735,38 +735,6 @@
                             <div class="contact-item">
                                 <i class="fas fa-minus"></i>
                                 <span>亚音: -- Hz</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-icon">
-                            <i class="fas fa-link"></i>
-                        </div>
-                        <h3>模拟链路</h3>
-                        <p>常用链路频率</p>
-                        <div class="contact-info">
-                            <div class="contact-item">
-                                <i class="fas fa-wave-square"></i>
-                                <span>--</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-icon">
-                            <i class="fas fa-walkie-talkie"></i>
-                        </div>
-                        <h3>公网对讲</h3>
-                        <p>全国范围覆盖</p>
-                        <div class="contact-info">
-                            <div class="contact-item">
-                                <i class="fas fa-network-wired"></i>
-                                <span>--</span>
-                            </div>
-                            <div class="contact-item">
-                                <i class="fas fa-mountain"></i>
-                                <span>--</span>
                             </div>
                         </div>
                     </div>
@@ -901,6 +869,23 @@
                     <div class="contact-item">
                         <i class="fas fa-broadcast-tower"></i>
                         <span>${item}</span>
+                    </div>
+                `).join('');
+
+                const repeatersList = document.getElementById('repeatersList');
+                repeatersList.innerHTML = hamData.repeaters.map(repeater => `
+                    <div class="card">
+                        <div class="card-icon">
+                            <i class="fas fa-tower-broadcast"></i>
+                        </div>
+                        <h3>${repeater.name}</h3>
+                        <p>${repeater.description || ''}</p>
+                        <div class="contact-info">
+                            ${repeater.uplink ? `<div class="contact-item"><i class="fas fa-arrow-up"></i><span>上行: ${repeater.uplink}</span></div>` : ''}
+                            ${repeater.downlink ? `<div class="contact-item"><i class="fas fa-arrow-down"></i><span>下行: ${repeater.downlink}</span></div>` : ''}
+                            ${repeater.tone ? `<div class="contact-item"><i class="fas fa-minus"></i><span>亚音: ${repeater.tone}</span></div>` : ''}
+                            ${repeater.frequency ? `<div class="contact-item"><i class="fas fa-wave-square"></i><span>${repeater.frequency}</span></div>` : ''}
+                        </div>
                     </div>
                 `).join('');
             }
