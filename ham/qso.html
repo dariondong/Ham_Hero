@@ -728,8 +728,10 @@
                 try {
                     const response = await fetch('./data.json');
                     hamData = await response.json();
+                    updateQSO();
                 } catch (error) {
                     console.error('加载数据失败:', error);
+                    updateQSO();
                 }
             }
 
@@ -763,21 +765,24 @@
                 return urlParams.get(param);
             }
 
-            document.getElementById('callsign').textContent = getQueryParam('callsign') || '-';
-            document.getElementById('mode').textContent = getQueryParam('mode') || 'FM';
-            document.getElementById('date').textContent = getQueryParam('date') || '-';
-            document.getElementById('time').textContent = getQueryParam('time') || '-';
-            document.getElementById('freq').textContent = getQueryParam('freq') || '-';
-            document.getElementById('rst').textContent = getQueryParam('rst') || '-';
-            document.getElementById('power').textContent = getQueryParam('power') || '-';
-            document.getElementById('radio').textContent = getQueryParam('radio') || '-';
-            document.getElementById('antenna').textContent = getQueryParam('antenna') || '-';
-            document.getElementById('remark').textContent = getQueryParam('remark') || '-';
+            function updateQSO() {
+                document.getElementById('callsign').textContent = getQueryParam('callsign') || '-';
+                document.getElementById('mode').textContent = getQueryParam('mode') || 'FM';
+                document.getElementById('date').textContent = getQueryParam('date') || '-';
+                document.getElementById('time').textContent = getQueryParam('time') || '-';
+                document.getElementById('freq').textContent = getQueryParam('freq') || '-';
+                document.getElementById('rst').textContent = getQueryParam('rst') || '-';
+                document.getElementById('power').textContent = getQueryParam('power') || '-';
+                document.getElementById('radio').textContent = getQueryParam('radio') || '-';
+                document.getElementById('antenna').textContent = getQueryParam('antenna') || '-';
+                document.getElementById('remark').textContent = getQueryParam('remark') || '-';
 
-            const callsign = getQueryParam('callsign');
-            if (callsign) {
-                document.getElementById('qrzLink').href = 'https://www.qrz.com/db/' + callsign;
-                document.getElementById('qsoWith').textContent = '与 ' + callsign + ' 通联';
+                const callsign = getQueryParam('callsign');
+                const myCallsign = hamData ? hamData.callsign : '--';
+                if (callsign) {
+                    document.getElementById('qrzLink').href = 'https://www.qrz.com/db/' + callsign;
+                    document.getElementById('qsoWith').textContent = myCallsign + ' 与 ' + callsign + ' 通联';
+                }
             }
 
             function generateShareText() {

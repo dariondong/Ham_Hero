@@ -736,7 +736,7 @@
                         </div>
                         <h3>QRZ 日志</h3>
                         <p>查看官方 QRZ 日志</p>
-                        <a href="https://www.qrz.com/db/" class="card-link" target="_blank">
+                        <a href="https://www.qrz.com/db/" class="card-link" id="qrzLink" target="_blank">
                             前往 QRZ <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -812,13 +812,33 @@
         </footer>
 
         <script>
+            let hamData = null;
+
+            async function loadData() {
+                try {
+                    const response = await fetch('./data.json');
+                    hamData = await response.json();
+                    updateQRZLink();
+                } catch (error) {
+                    console.error('加载数据失败:', error);
+                }
+            }
+
+            function updateQRZLink() {
+                if (hamData && hamData.social && hamData.social.qrz) {
+                    document.getElementById('qrzLink').href = hamData.social.qrz;
+                }
+            }
+
             const navbar = document.getElementById('navbar');
             const videoContainer = document.getElementById('videoContainer');
             const pageLoader = document.getElementById('pageLoader');
             const bgVideo = document.getElementById('bgVideo');
 
             window.addEventListener('load', function() {
+                loadData();
                 setTimeout(function() {
+                    pageLoader.classList.add('hidden');
                     bgVideo.play();
                 }, 800);
             });
